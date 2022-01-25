@@ -16,6 +16,7 @@ public class Cunovania extends JFrame {
     private void initGame() {
         add(new Window());
 
+        setLocationRelativeTo(null);
         setSize(1400, 1400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Cunovania");
@@ -23,7 +24,9 @@ public class Cunovania extends JFrame {
 
     public static void main(String[] args) {
         System.out.println("sus");
-        Cunovania game = new Cunovania();
-        game.setVisible(true);
+        EventQueue.invokeLater(() -> {
+            Cunovania game = new Cunovania();
+            game.setVisible(true);
+        });
     }
 }

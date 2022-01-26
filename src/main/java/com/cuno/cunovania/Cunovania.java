@@ -9,15 +9,19 @@ import java.awt.Graphics2D;
 import com.cuno.cunovania.ui.Window;
 
 public class Cunovania extends JFrame {
+    public static Window GameWindow;
+    public static Cunovania Instance;
+
     public Cunovania() {
         initGame();
     }
 
     private void initGame() {
-        add(new Window());
+        GameWindow = new Window();
+        add(GameWindow);
 
-        setLocationRelativeTo(null);
-        setSize(1400, 1400);
+        setLocation(0, 0);
+        setSize(1980, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Cunovania");
     }
@@ -25,8 +29,8 @@ public class Cunovania extends JFrame {
     public static void main(String[] args) {
         System.out.println("sus");
         EventQueue.invokeLater(() -> {
-            Cunovania game = new Cunovania();
-            game.setVisible(true);
+            Instance = new Cunovania();
+            Instance.setVisible(true);
         });
     }
 }

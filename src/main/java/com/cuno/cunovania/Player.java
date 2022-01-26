@@ -1,29 +1,58 @@
 package com.cuno.cunovania;
 
-import com.cuno.cunovania.common.Vector2;
+import com.cuno.cunovania.common.Utils;
+import com.sun.tools.javac.Main;
 
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.util.Vector;
 import javax.swing.ImageIcon;
 
 public class Player {
     public int width;
     public int height;
-    public Vector2 position;
-    public Vector2 velocity;
+    public float X;
+    public float Y;
+    public float velocityX;
+    public float velocityY;
     public Image texture;
+
+    public boolean leftDown;
+    public boolean rightDown;
+    public boolean jumpDown;
+
+    public boolean onGround;
 
     public Player() {
         texture = new ImageIcon("src/main/resources/paul.jpg").getImage();
         width = 50;
         height = 100;
-        position = Vector2.Zero;
-        velocity = Vector2.Zero;
+        X = 0;
+        Y = 200;
+        leftDown = false;
+        rightDown = false;
+        jumpDown = false;
+        onGround = true;
+        velocityX = 0;
+        velocityY = 0;
     }
 
     public void update() {
-        position.add(velocity);
-        velocity = Vector2.Zero;
+        if (leftDown) {
+            velocityX -= 5;
+        }
+        if (rightDown) {
+            velocityX += 5;
+        }
+        X += velocityX;
+        Y += velocityY;
+        if (Y <= 200) {
+            velocityY += 0.2f;
+            onGround = false;
+        }
+        if (Y > 200) {
+            velocityY = 0.0f;
+            onGround = true;
+        }
+        velocityX = 0;
+        X = Utils.clamp(X, 0f, (float)Cunovania.Instance.getSize().width - width);
     }
 }

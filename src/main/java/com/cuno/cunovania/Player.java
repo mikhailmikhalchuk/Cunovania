@@ -1,10 +1,8 @@
 package com.cuno.cunovania;
 
-import com.cuno.cunovania.common.Utils;
-import com.cuno.cunovania.content.entityComponents.EBasicDrawable;
-import com.cuno.cunovania.content.entityComponents.EMovable;
-import com.cuno.cunovania.content.entityComponents.EPositionable;
-import com.cuno.cunovania.content.entityComponents.ESizable;
+import com.cuno.cunovania.common.GameUtils;
+import com.cuno.cunovania.common.Vector2;
+import com.cuno.cunovania.content.entityComponents.*;
 import com.cuno.cunovania.core.entity.Entity;
 
 import java.awt.Image;
@@ -16,6 +14,7 @@ public class Player extends Entity
     public ESizable ESizable;
     public EMovable EMovable;
     public EBasicDrawable EBasicDrawable;
+    public EHitboxable EHitboxable;
     public Image texture;
 
     public boolean leftDown;
@@ -27,14 +26,16 @@ public class Player extends Entity
     public Player()
     {
         texture = new ImageIcon("src/main/resources/paul.jpg").getImage();
-        EPositionable = new EPositionable(0, 200);
-        ESizable = new ESizable(50, 100);
-        EMovable = new EMovable(EPositionable, 0, 0);
+        EPositionable = new EPositionable(new Vector2(0, 200));
+        ESizable = new ESizable(new Vector2(50, 100));
+        EMovable = new EMovable(EPositionable, new Vector2(0, 0));
         EBasicDrawable = new EBasicDrawable(EPositionable, ESizable, texture);
+        EHitboxable = new EHitboxable(EPositionable, ESizable);
         AddComponent(EPositionable);
         AddComponent(ESizable);
         AddComponent(EMovable);
         AddComponent(EBasicDrawable);
+        AddComponent(EHitboxable);
         leftDown = false;
         rightDown = false;
         jumpDown = false;
@@ -44,30 +45,31 @@ public class Player extends Entity
     @Override
     public void UpdateSelf()
     {
+        System.out.println(EPositionable.Position.toString());
         if (leftDown)
         {
-            EMovable.VelocityX = -5;
+            EMovable.Velocity.X = -5;
         }
         else if (rightDown)
         {
-            EMovable.VelocityX = 5;
+            EMovable.Velocity.X = 5;
         }
         else
         {
-            EMovable.VelocityX = 0;
+            EMovable.Velocity.X = 0;
         }
 
-        if (EPositionable.Y <= 200)
+        if (EPositionable.Position.Y <= 200)
         {
-            EMovable.VelocityY += 0.2f;
+            EMovable.Velocity.Y += 0.2f;
             onGround = false;
         }
-        else if (EPositionable.Y > 200)
+        else if (EPositionable.Position.Y > 200)
         {
-            EMovable.VelocityY = 0.0f;
+            EMovable.Velocity.Y = 0.0f;
             onGround = true;
         }
 
-        EPositionable.X = Utils.clamp(EPositionable.X, 0, Cunovania.Instance.getSize().width - ESizable.Width);
+        EPositionable.Position.X = GameUtils.clamp(EPositionable.Position.X, 0f, Cunovania.Instance.getSize().width - ESizable.Dimensions.X);
     }
 }

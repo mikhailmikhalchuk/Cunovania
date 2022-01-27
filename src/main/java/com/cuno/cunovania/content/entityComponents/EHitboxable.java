@@ -4,21 +4,20 @@ import com.cuno.cunovania.common.Vector2;
 import com.cuno.cunovania.core.entity.Entity;
 import com.cuno.cunovania.core.entity.EntityComponent;
 
-public class EMovable extends EntityComponent
+public class EHitboxable extends EntityComponent
 {
     public EPositionable EPositionable;
 
-    public Vector2 Velocity;
+    public ESizable ESizable;
 
-    public EMovable(EPositionable ePositionable, Vector2 velocity)
+    public EHitboxable(EPositionable ePositionable, ESizable eSizable)
     {
         EPositionable = ePositionable;
-        Velocity = velocity;
+        ESizable = eSizable;
     }
 
-    @Override
-    public void Update(Entity entity)
+    public Vector2 Center()
     {
-        EPositionable.Position.addWithoutNew(Velocity);
+        return EPositionable.Position.add(ESizable.Dimensions.divide(2));
     }
 }

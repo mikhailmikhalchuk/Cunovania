@@ -15,10 +15,16 @@ public class Cunovania extends JFrame {
     public static Window GameWindow;
     public static Cunovania Instance;
     public static ArrayList<Entity> ActiveEntities;
+    public static Image MagicPixel;
 
     public Cunovania() {
         initData();
         initGame();
+    }
+
+    private void initData() {
+        ActiveEntities = new ArrayList<Entity>();
+        MagicPixel = new ImageIcon("src/main/resources/MagicPixel.png").getImage();
     }
 
     private void initGame() {
@@ -29,10 +35,6 @@ public class Cunovania extends JFrame {
         setSize(1980, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Cunovania");
-    }
-
-    private void initData() {
-        ActiveEntities = new ArrayList<Entity>();
     }
 
     public static void main(String[] args) {

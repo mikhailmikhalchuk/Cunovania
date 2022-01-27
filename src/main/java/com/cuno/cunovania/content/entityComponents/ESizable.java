@@ -1,16 +1,14 @@
 package com.cuno.cunovania.content.entityComponents;
 
+import com.cuno.cunovania.common.Vector2;
 import com.cuno.cunovania.core.entity.EntityComponent;
 
 public class ESizable extends EntityComponent
 {
-    public int Width;
+    public Vector2 Dimensions;
 
-    public int Height;
-
-    public ESizable(int width, int height)
+    public ESizable(Vector2 dimensions)
     {
-        Width = width;
-        Height = height;
+        Dimensions = dimensions;
     }
 }

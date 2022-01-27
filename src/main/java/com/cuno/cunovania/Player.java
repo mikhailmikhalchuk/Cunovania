@@ -1,18 +1,21 @@
 package com.cuno.cunovania;
 
 import com.cuno.cunovania.common.Utils;
-import com.sun.tools.javac.Main;
+import com.cuno.cunovania.content.entityComponents.EBasicDrawable;
+import com.cuno.cunovania.content.entityComponents.EMovable;
+import com.cuno.cunovania.content.entityComponents.EPositionable;
+import com.cuno.cunovania.content.entityComponents.ESizable;
+import com.cuno.cunovania.core.entity.Entity;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Player {
-    public int width;
-    public int height;
-    public float X;
-    public float Y;
-    public float velocityX;
-    public float velocityY;
+public class Player extends Entity
+{
+    public EPositionable EPositionable;
+    public ESizable ESizable;
+    public EMovable EMovable;
+    public EBasicDrawable EBasicDrawable;
     public Image texture;
 
     public boolean leftDown;
@@ -21,38 +24,46 @@ public class Player {
 
     public boolean onGround;
 
-    public Player() {
+    public Player()
+    {
         texture = new ImageIcon("src/main/resources/paul.jpg").getImage();
-        width = 50;
-        height = 100;
-        X = 0;
-        Y = 200;
+        EPositionable = new EPositionable(0, 200);
+        ESizable = new ESizable(50, 100);
+        EMovable = new EMovable(EPositionable, 0, 0);
+        EBasicDrawable = new EBasicDrawable(EPositionable, ESizable, texture);
         leftDown = false;
         rightDown = false;
         jumpDown = false;
         onGround = true;
-        velocityX = 0;
-        velocityY = 0;
     }
 
-    public void update() {
-        if (leftDown) {
-            velocityX -= 5;
+    @Override
+    public void UpdateSelf()
+    {
+        if (leftDown)
+        {
+            EMovable.VelocityX = -5;
         }
-        if (rightDown) {
-            velocityX += 5;
+        else if (rightDown)
+        {
+            EMovable.VelocityX = 5;
         }
-        X += velocityX;
-        Y += velocityY;
-        if (Y <= 200) {
-            velocityY += 0.2f;
+        else
+        {
+            EMovable.VelocityX = 0;
+        }
+
+        if (EPositionable.Y <= 200)
+        {
+            EMovable.VelocityY += 0.2f;
             onGround = false;
         }
-        if (Y > 200) {
-            velocityY = 0.0f;
+        else if (EPositionable.Y > 200)
+        {
+            EMovable.VelocityY = 0.0f;
             onGround = true;
         }
-        velocityX = 0;
-        X = Utils.clamp(X, 0f, (float)Cunovania.Instance.getSize().width - width);
+
+        EPositionable.X = Utils.clamp(EPositionable.X, 0, Cunovania.Instance.getSize().width - ESizable.Width);
     }
 }

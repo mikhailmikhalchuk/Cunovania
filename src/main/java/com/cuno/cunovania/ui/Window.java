@@ -1,6 +1,8 @@
 package com.cuno.cunovania.ui;
 
 import com.cuno.cunovania.Player;
+import com.cuno.cunovania.core.entity.Entity;
+import com.cuno.cunovania.core.entity.EntityComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Window extends JPanel implements ActionListener {
+    public ArrayList<Entity> ActiveEntities;
     private Player player;
     private Timer timer;
 
@@ -17,7 +21,9 @@ public class Window extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setBackground(Color.BLACK);
 
+        ActiveEntities = new ArrayList<Entity>();
         player = new Player();
+        ActiveEntities.add(player);
 
         timer = new Timer(10, this);
         timer.start();
@@ -30,15 +36,21 @@ public class Window extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(player.texture, (int)player.X, (int)player.Y, player.width, player.height, this);
+        for (Entity entity : ActiveEntities)
+        {
+            entity.Draw(this, g2d);
+        }
 
         Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        player.update();
 
+        for (Entity entity : ActiveEntities)
+        {
+            entity.Update();
+        }
         repaint();
     }
 
@@ -54,12 +66,12 @@ public class Window extends JPanel implements ActionListener {
                 player.rightDown = true;
             }
             if (key == KeyEvent.VK_SPACE && player.onGround) {
-                player.velocityY = -5;
+                player.EMovable.VelocityY = -5;
                 player.jumpDown = true;
                 player.onGround = false;
             }
             if (key == KeyEvent.VK_S) {
-                player.velocityY += 1;
+                player.EMovable.VelocityY += 1;
             }
         }
 

@@ -5,6 +5,7 @@ import com.cuno.cunovania.Player;
 import com.cuno.cunovania.common.DrawUtils;
 import com.cuno.cunovania.common.GameUtils;
 import com.cuno.cunovania.common.Input;
+import com.cuno.cunovania.common.Vector2;
 import com.cuno.cunovania.content.Bullet;
 
 import javax.swing.*;
@@ -36,14 +37,14 @@ public class Window extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(player.texture, (int)player.X, (int)player.Y, player.width, player.height, this);
+        g2d.drawImage(player.texture, (int)player.position.X, (int)player.position.Y, player.width, player.height, this);
         if (Input.mouseState != null) {
 
-            double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - ((int)player.X + player.width / 2), Input.mouseState.getLocation().y - ((int)player.Y + player.height / 2)) + Math.PI / 2;
+            double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - ((int)player.position.X + player.width / 2), Input.mouseState.getLocation().y - ((int)player.position.Y + player.height / 2)) + Math.PI / 2;
 
-            DrawUtils.drawRotatedImage(g2d, Cunovania.MagicPixel, (int)player.X + player.width / 2, (int)player.Y + player.height / 2, 50, 10, theta, (int)player.X + player.width / 2, (int)player.Y + player.height / 2, this);
+            DrawUtils.drawRotatedImage(g2d, Cunovania.MagicPixel, (int)player.position.X + player.width / 2, (int)player.position.Y + player.height / 2, 50, 10, theta, (int)player.position.X + player.width / 2, (int)player.position.Y + player.height / 2, this);
 
-            g2d.drawImage(Cunovania.MagicPixel, (int)player.X + player.width / 2, (int)player.Y + player.height / 2, 10, 10, this);
+            g2d.drawImage(Cunovania.MagicPixel, (int)player.position.X + player.width / 2, (int)player.position.Y + player.height / 2, 10, 10, this);
         }
 
         for (int i = 0; i < Bullet.allBullets.size(); i++) {
@@ -68,10 +69,12 @@ public class Window extends JPanel implements ActionListener {
         @Override
         public void mousePressed(MouseEvent e) {
             Input.mouseDown = true;
-            double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - ((int)player.X + player.width / 2), Input.mouseState.getLocation().y - ((int)player.Y + player.height / 2)) + Math.PI / 2;
-            Point pos = Input.mouseState.getLocation();
+            double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - ((int)player.position.X + player.width / 2), Input.mouseState.getLocation().y - ((int)player.position.Y + player.height / 2)) + Math.PI / 2;
+            Vector2 pos = Vector2.fromPoint(Input.mouseState.getLocation()).subtract(player.position);
 
-            new Bullet(pos, new Point((int)(pos.x * Math.sqrt(pos.x * pos.x + pos.y * pos.y)), (int)(pos.y * Math.sqrt(pos.x * pos.x + pos.y * pos.y))));
+            pos = pos.divide(80f);
+            System.out.println(new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))));
+            new Bullet(pos, new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))), theta);
         }
 
         @Override
@@ -92,12 +95,12 @@ public class Window extends JPanel implements ActionListener {
                 player.rightDown = true;
             }
             if (key == KeyEvent.VK_SPACE && player.onGround) {
-                player.velocityY = -5;
+                player.velocity.Y = -5;
                 player.jumpDown = true;
                 player.onGround = false;
             }
             if (key == KeyEvent.VK_S) {
-                player.velocityY += 1;
+                player.velocity.Y += 1;
             }
         }
 

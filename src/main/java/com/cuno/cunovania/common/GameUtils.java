@@ -16,4 +16,8 @@ public class GameUtils {
     public static double toRotation(int x, int y) {
         return Math.atan2((float)x, (float)y);
     }
+
+    public static double toRotation(Vector2 vector) {
+        return Math.atan2(vector.X, vector.Y);
+    }
 }

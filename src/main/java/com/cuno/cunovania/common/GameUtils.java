@@ -1,6 +1,8 @@
 package com.cuno.cunovania.common;
 
-public class Utils {
+import java.awt.*;
+
+public class GameUtils {
     public static <T extends Comparable<T>> T clamp(T val, T min, T max) {
         if (val.compareTo(max) > 0) {
             return max;
@@ -9,5 +11,9 @@ public class Utils {
             return min;
         }
         return val;
+    }
+
+    public static double toRotation(int x, int y) {
+        return Math.atan2((float)x, (float)y);
     }
 }

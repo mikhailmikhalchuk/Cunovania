@@ -11,6 +11,7 @@ import com.cuno.cunovania.ui.Window;
 public class Cunovania extends JFrame {
     public static Window GameWindow;
     public static Cunovania Instance;
+    public static Image MagicPixel = new ImageIcon("src/main/resources/MagicPixel.png").getImage();
 
     public Cunovania() {
         initGame();

@@ -1,8 +1,6 @@
 package com.cuno.cunovania;
 
-import com.cuno.cunovania.common.Utils;
-import com.sun.tools.javac.Main;
-
+import com.cuno.cunovania.common.GameUtils;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -53,6 +51,6 @@ public class Player {
             onGround = true;
         }
         velocityX = 0;
-        X = Utils.clamp(X, 0f, (float)Cunovania.Instance.getSize().width - width);
+        X = GameUtils.clamp(X, 0f, (float)Cunovania.Instance.getSize().width - width);
     }
 }

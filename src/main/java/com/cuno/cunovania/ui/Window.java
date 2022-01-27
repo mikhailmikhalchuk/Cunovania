@@ -1,5 +1,6 @@
 package com.cuno.cunovania.ui;
 
+import com.cuno.cunovania.Cunovania;
 import com.cuno.cunovania.Player;
 import com.cuno.cunovania.core.entity.Entity;
 import com.cuno.cunovania.core.entity.EntityComponent;
@@ -13,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class Window extends JPanel implements ActionListener {
-    public ArrayList<Entity> ActiveEntities;
     private Player player;
     private Timer timer;
 
@@ -21,9 +21,8 @@ public class Window extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setBackground(Color.BLACK);
 
-        ActiveEntities = new ArrayList<Entity>();
         player = new Player();
-        ActiveEntities.add(player);
+        Cunovania.ActiveEntities.add(player);
 
         timer = new Timer(10, this);
         timer.start();
@@ -36,7 +35,7 @@ public class Window extends JPanel implements ActionListener {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        for (Entity entity : ActiveEntities)
+        for (Entity entity : Cunovania.ActiveEntities)
         {
             entity.Draw(this, g2d);
         }
@@ -46,8 +45,7 @@ public class Window extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        for (Entity entity : ActiveEntities)
+        for (Entity entity : Cunovania.ActiveEntities)
         {
             entity.Update();
         }

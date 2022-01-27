@@ -31,6 +31,10 @@ public class Player extends Entity
         ESizable = new ESizable(50, 100);
         EMovable = new EMovable(EPositionable, 0, 0);
         EBasicDrawable = new EBasicDrawable(EPositionable, ESizable, texture);
+        AddComponent(EPositionable);
+        AddComponent(ESizable);
+        AddComponent(EMovable);
+        AddComponent(EBasicDrawable);
         leftDown = false;
         rightDown = false;
         jumpDown = false;

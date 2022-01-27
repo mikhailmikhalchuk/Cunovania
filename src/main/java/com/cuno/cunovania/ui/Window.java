@@ -6,7 +6,7 @@ import com.cuno.cunovania.common.DrawUtils;
 import com.cuno.cunovania.common.GameUtils;
 import com.cuno.cunovania.common.Input;
 import com.cuno.cunovania.common.Vector2;
-import com.cuno.cunovania.content.Bullet;
+import com.cuno.cunovania.content.entities.Bullet;
 import com.cuno.cunovania.core.entity.Entity;
 
 import javax.swing.*;

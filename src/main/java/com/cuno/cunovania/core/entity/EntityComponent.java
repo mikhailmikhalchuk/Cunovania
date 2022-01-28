@@ -5,9 +5,9 @@ import java.awt.image.ImageObserver;
 
 public class EntityComponent
 {
-    public void Update(Entity entity) { }
+    public void update(Entity entity) { }
 
-    public void Draw(ImageObserver observer, Graphics2D graphics2D) { }
+    public void draw(ImageObserver observer, Graphics2D graphics2D) { }
 
-    public void Merge(EntityComponent otherComponent) { }
+    public void merge(EntityComponent otherComponent) { }
 }

@@ -41,12 +41,12 @@ public class Window extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         for (Entity entity : Cunovania.ActiveEntities)
         {
-            entity.Draw(this, g2d);
+            entity.draw(this, g2d);
         }
 
         if (Input.mouseState != null) {
 
-            Vector2 playerCenter = player.EHitboxable.Center();
+            Vector2 playerCenter = player.EHitboxable.center();
             double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - (int)playerCenter.X, Input.mouseState.getLocation().y - (int)playerCenter.Y) + Math.PI / 2;
 
             DrawUtils.drawRotatedImage(g2d, Cunovania.MagicPixel, (int)playerCenter.X, (int)playerCenter.Y, 50, 10, theta, (int)playerCenter.X, (int)playerCenter.Y, this);
@@ -61,7 +61,7 @@ public class Window extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (Entity entity : Cunovania.ActiveEntities)
         {
-            entity.Update();
+            entity.update();
         }
 
         Input.handleInput();
@@ -72,12 +72,12 @@ public class Window extends JPanel implements ActionListener {
         @Override
         public void mousePressed(MouseEvent e) {
             Input.mouseDown = true;
-            Vector2 playerCenter = player.EHitboxable.Center();
+            Vector2 playerCenter = player.EHitboxable.center();
             double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - (int)playerCenter.X, Input.mouseState.getLocation().y - (int)playerCenter.Y) + Math.PI / 2;
-            Vector2 pos = Vector2.fromPoint(Input.mouseState.getLocation()).subtract(player.EPositionable.Position);
+            Vector2 pos = Vector2.fromPoint(Input.mouseState.getLocation()).subtract(player.EPositionable.Position).divide(80f);
 
-            pos = pos.divide(80f);
-            System.out.println(new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))));
+
+            //System.out.println(new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))));
             Bullet bullet = new Bullet(pos, new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))), theta);
             Cunovania.ActiveEntities.add(bullet);
         }
@@ -100,9 +100,7 @@ public class Window extends JPanel implements ActionListener {
                 player.rightDown = true;
             }
             if (key == KeyEvent.VK_SPACE && player.onGround) {
-                player.EMovable.Velocity.Y = -5;
                 player.jumpDown = true;
-                player.onGround = false;
             }
             if (key == KeyEvent.VK_S) {
                 player.EMovable.Velocity.Y += 1;

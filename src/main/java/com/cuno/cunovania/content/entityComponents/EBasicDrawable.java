@@ -21,7 +21,7 @@ public class EBasicDrawable extends EntityComponent
     }
 
     @Override
-    public void Draw(ImageObserver observer, Graphics2D graphics2D)
+    public void draw(ImageObserver observer, Graphics2D graphics2D)
     {
         graphics2D.drawImage(Texture, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (int)ESizable.Dimensions.X, (int)ESizable.Dimensions.Y, observer);
     }

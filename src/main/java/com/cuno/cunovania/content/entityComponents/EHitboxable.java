@@ -16,7 +16,7 @@ public class EHitboxable extends EntityComponent
         ESizable = eSizable;
     }
 
-    public Vector2 Center()
+    public Vector2 center()
     {
         return EPositionable.Position.add(ESizable.Dimensions.divide(2));
     }

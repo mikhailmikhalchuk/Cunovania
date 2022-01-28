@@ -28,15 +28,15 @@ public class Bullet extends Entity {
         EPositionable = new EPositionable(position);
         ESizable = new ESizable(new Vector2(25));
         EMovable = new EMovable(EPositionable, velocity);
-        AddComponent(EPositionable);
-        AddComponent(ESizable);
-        AddComponent(EMovable);
+        addComponent(EPositionable);
+        addComponent(ESizable);
+        addComponent(EMovable);
 
         this.rotation = rotation;
     }
 
     @Override
-    public void DrawSelf(ImageObserver observer, Graphics2D graphics2D)
+    public void drawSelf(ImageObserver observer, Graphics2D graphics2D)
     {
         DrawUtils.drawRotatedImage(graphics2D, Cunovania.MagicPixel, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (int)ESizable.Dimensions.X, (int)ESizable.Dimensions.Y, rotation, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (JPanel)observer);
     }

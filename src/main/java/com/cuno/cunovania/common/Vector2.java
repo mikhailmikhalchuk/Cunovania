@@ -46,7 +46,7 @@ public class Vector2 {
         return new Vector2(point.x, point.y);
     }
 
-    public void addWithoutNew(Vector2 vector) {
+    public void addToVector(Vector2 vector) {
         X += vector.X;
         Y += vector.Y;
     }

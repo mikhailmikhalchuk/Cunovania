@@ -31,11 +31,11 @@ public class Player extends Entity
         EMovable = new EMovable(EPositionable, new Vector2(0, 0));
         EBasicDrawable = new EBasicDrawable(EPositionable, ESizable, texture);
         EHitboxable = new EHitboxable(EPositionable, ESizable);
-        AddComponent(EPositionable);
-        AddComponent(ESizable);
-        AddComponent(EMovable);
-        AddComponent(EBasicDrawable);
-        AddComponent(EHitboxable);
+        addComponent(EPositionable);
+        addComponent(ESizable);
+        addComponent(EMovable);
+        addComponent(EBasicDrawable);
+        addComponent(EHitboxable);
         leftDown = false;
         rightDown = false;
         jumpDown = false;
@@ -43,9 +43,9 @@ public class Player extends Entity
     }
 
     @Override
-    public void UpdateSelf()
+    public void updateSelf()
     {
-        System.out.println(EPositionable.Position.toString());
+        //System.out.println(EPositionable.Position.toString());
         if (leftDown)
         {
             EMovable.Velocity.X = -5;
@@ -66,8 +66,13 @@ public class Player extends Entity
         }
         else if (EPositionable.Position.Y > 200)
         {
+            System.out.println("hes true");
             EMovable.Velocity.Y = 0.0f;
             onGround = true;
+        }
+        if (jumpDown && onGround) {
+            EMovable.Velocity.Y = -5f;
+            onGround = false;
         }
 
         EPositionable.Position.X = GameUtils.clamp(EPositionable.Position.X, 0f, Cunovania.Instance.getSize().width - ESizable.Dimensions.X);

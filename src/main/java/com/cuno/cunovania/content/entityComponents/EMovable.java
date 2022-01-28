@@ -17,8 +17,8 @@ public class EMovable extends EntityComponent
     }
 
     @Override
-    public void Update(Entity entity)
+    public void update(Entity entity)
     {
-        EPositionable.Position.addWithoutNew(Velocity);
+        EPositionable.Position.addToVector(Velocity);
     }
 }

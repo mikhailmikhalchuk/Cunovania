@@ -23,7 +23,7 @@ public class Cunovania extends JFrame {
     }
 
     private void initData() {
-        ActiveEntities = new ArrayList<Entity>();
+        ActiveEntities = new ArrayList<>();
         MagicPixel = new ImageIcon("src/main/resources/MagicPixel.png").getImage();
     }
 

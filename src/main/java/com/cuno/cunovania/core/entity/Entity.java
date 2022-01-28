@@ -13,31 +13,31 @@ public class Entity
         ActiveComponents = new ArrayList<EntityComponent>();
     }
 
-    public void UpdateSelf() { }
+    public void updateSelf() { }
 
-    public final void Update()
+    public final void update()
     {
-        UpdateSelf();
+        updateSelf();
 
         for (EntityComponent component : ActiveComponents)
         {
-            component.Update(this);
+            component.update(this);
         }
     }
 
-    public void DrawSelf(ImageObserver observer, Graphics2D graphics2D) { }
+    public void drawSelf(ImageObserver observer, Graphics2D graphics2D) { }
 
-    public final void Draw(ImageObserver observer, Graphics2D graphics2D)
+    public final void draw(ImageObserver observer, Graphics2D graphics2D)
     {
-        DrawSelf(observer, graphics2D);
+        drawSelf(observer, graphics2D);
 
         for (EntityComponent component : ActiveComponents)
         {
-            component.Draw(observer, graphics2D);
+            component.draw(observer, graphics2D);
         }
     }
 
-    public boolean AddComponent(EntityComponent component)
+    public boolean addComponent(EntityComponent component)
     {
         boolean successfullyAdded = true;
         for (EntityComponent existingComponent : ActiveComponents)
@@ -47,7 +47,7 @@ public class Entity
                 continue;
             }
 
-            existingComponent.Merge(component);
+            existingComponent.merge(component);
             successfullyAdded = false;
             break;
         }
@@ -56,7 +56,7 @@ public class Entity
         return successfullyAdded;
     }
 
-    public boolean RemoveComponent(Class<?> componentClass)
+    public boolean removeComponent(Class<?> componentClass)
     {
         return ActiveComponents.removeIf(component -> component.getClass() == componentClass);
     }

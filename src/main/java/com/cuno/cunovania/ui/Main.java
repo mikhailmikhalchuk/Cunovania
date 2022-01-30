@@ -1,11 +1,8 @@
 package com.cuno.cunovania.ui;
 
-import com.cuno.cunovania.Cunovania;
 import com.cuno.cunovania.Player;
-import com.cuno.cunovania.common.DrawUtils;
-import com.cuno.cunovania.common.GameUtils;
-import com.cuno.cunovania.common.Input;
-import com.cuno.cunovania.common.Vector2;
+import com.cuno.cunovania.common.*;
+import com.cuno.cunovania.content.RoomObject;
 import com.cuno.cunovania.content.entities.Bullet;
 import com.cuno.cunovania.core.entity.Entity;
 
@@ -15,18 +12,22 @@ import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-public class Window extends JPanel implements ActionListener {
+public class Main extends JPanel implements ActionListener {
     private Player player;
     private Timer timer;
+    public static ArrayList<Entity> ActiveEntities;
+    public static Image MagicPixel;
 
-    public Window() {
+    public Main() {
+        initData();
         addKeyListener(new TAdapterKeys());
         addMouseListener(new TAdapterMouse());
         setBackground(Color.BLACK);
 
         player = new Player();
-        Cunovania.ActiveEntities.add(player);
+        ActiveEntities.add(player);
 
         timer = new Timer(10, this);
         timer.start();
@@ -34,12 +35,19 @@ public class Window extends JPanel implements ActionListener {
         setFocusable(true);
     }
 
+    private void initData() {
+        ActiveEntities = new ArrayList<>();
+        MagicPixel = new ImageIcon("src/main/resources/MagicPixel.png").getImage();
+        RoomObject obj = new RoomObject(new Rectangle(100, 200, 100, 100));
+        ActiveEntities.add(obj);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        for (Entity entity : Cunovania.ActiveEntities)
+        for (Entity entity : ActiveEntities)
         {
             entity.draw(this, g2d);
         }
@@ -49,9 +57,9 @@ public class Window extends JPanel implements ActionListener {
             Vector2 playerCenter = player.EHitboxable.center();
             double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - (int)playerCenter.X, Input.mouseState.getLocation().y - (int)playerCenter.Y) + Math.PI / 2;
 
-            DrawUtils.drawRotatedImage(g2d, Cunovania.MagicPixel, (int)playerCenter.X, (int)playerCenter.Y, 50, 10, theta, (int)playerCenter.X, (int)playerCenter.Y, this);
+            DrawUtils.drawRotatedImage(g2d, MagicPixel, (int)playerCenter.X, (int)playerCenter.Y, 50, 10, theta, (int)playerCenter.X, (int)playerCenter.Y, this);
 
-            g2d.drawImage(Cunovania.MagicPixel, (int)playerCenter.X, (int)playerCenter.Y, 10, 10, this);
+            g2d.drawImage(MagicPixel, (int)playerCenter.X, (int)playerCenter.Y, 10, 10, this);
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -59,7 +67,7 @@ public class Window extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Entity entity : Cunovania.ActiveEntities)
+        for (Entity entity : ActiveEntities)
         {
             entity.update();
         }
@@ -73,13 +81,13 @@ public class Window extends JPanel implements ActionListener {
         public void mousePressed(MouseEvent e) {
             Input.mouseDown = true;
             Vector2 playerCenter = player.EHitboxable.center();
-            double theta = -GameUtils.toRotation(Input.mouseState.getLocation().x - (int)playerCenter.X, Input.mouseState.getLocation().y - (int)playerCenter.Y) + Math.PI / 2;
-            Vector2 pos = Vector2.fromPoint(Input.mouseState.getLocation()).subtract(player.EPositionable.Position).divide(80f);
+            double theta = Math.atan2(Input.mouseState.getLocation().x - playerCenter.X, Input.mouseState.getLocation().y - playerCenter.Y);
+            Vector2 vel = new Vector2((float)((player.bulletVelocity) * Math.cos(theta)), (float)((player.bulletVelocity) * Math.sin(theta)));
 
 
             //System.out.println(new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))));
-            Bullet bullet = new Bullet(pos, new Vector2((float)(pos.X * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y)), (float)(pos.Y * Math.sqrt(pos.X * pos.X + pos.Y * pos.Y))), theta);
-            Cunovania.ActiveEntities.add(bullet);
+            Bullet bullet = new Bullet(playerCenter, new Vector2(vel.X - MathUtils.PI, -(vel.Y - MathUtils.PI)), theta);
+            ActiveEntities.add(bullet);
         }
 
         @Override

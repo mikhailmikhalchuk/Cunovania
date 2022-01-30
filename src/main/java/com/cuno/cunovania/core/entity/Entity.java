@@ -10,7 +10,7 @@ public class Entity
 
     public Entity()
     {
-        ActiveComponents = new ArrayList<EntityComponent>();
+        ActiveComponents = new ArrayList<>();
     }
 
     public void updateSelf() { }
@@ -59,5 +59,18 @@ public class Entity
     public boolean removeComponent(Class<?> componentClass)
     {
         return ActiveComponents.removeIf(component -> component.getClass() == componentClass);
+    }
+
+    public boolean hasComponent(Class<?> componentClass) {
+        return ActiveComponents.stream().anyMatch(component -> component.getClass() == componentClass);
+    }
+
+    public EntityComponent getComponent(Class<?> componentClass) {
+        for (EntityComponent component : ActiveComponents) {
+            if (component.getClass() == componentClass) {
+                return component;
+            }
+        }
+        return null; //socialcreditlost
     }
 }

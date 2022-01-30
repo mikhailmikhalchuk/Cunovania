@@ -1,6 +1,5 @@
 package com.cuno.cunovania.content.entities;
 
-import com.cuno.cunovania.Cunovania;
 import com.cuno.cunovania.common.DrawUtils;
 import com.cuno.cunovania.common.GameUtils;
 import com.cuno.cunovania.common.Input;
@@ -10,6 +9,7 @@ import com.cuno.cunovania.content.entityComponents.EPositionable;
 import com.cuno.cunovania.content.entityComponents.ESizable;
 import com.cuno.cunovania.core.entity.Entity;
 import com.cuno.cunovania.core.entity.EntityComponent;
+import com.cuno.cunovania.ui.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +38,6 @@ public class Bullet extends Entity {
     @Override
     public void drawSelf(ImageObserver observer, Graphics2D graphics2D)
     {
-        DrawUtils.drawRotatedImage(graphics2D, Cunovania.MagicPixel, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (int)ESizable.Dimensions.X, (int)ESizable.Dimensions.Y, rotation, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (JPanel)observer);
+        DrawUtils.drawRotatedImage(graphics2D, Main.MagicPixel, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (int)ESizable.Dimensions.X, (int)ESizable.Dimensions.Y, rotation, (int)EPositionable.Position.X, (int)EPositionable.Position.Y, (JPanel)observer);
     }
 }

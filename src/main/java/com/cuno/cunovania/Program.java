@@ -9,27 +9,19 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.cuno.cunovania.core.entity.Entity;
-import com.cuno.cunovania.ui.Window;
+import com.cuno.cunovania.ui.Main;
 
-public class Cunovania extends JFrame {
-    public static Window GameWindow;
-    public static Cunovania Instance;
-    public static ArrayList<Entity> ActiveEntities;
-    public static Image MagicPixel;
+public class Program extends JFrame {
+    public static Main Main;
+    public static Program Instance;
 
-    public Cunovania() {
-        initData();
+    public Program() {
         initGame();
     }
 
-    private void initData() {
-        ActiveEntities = new ArrayList<>();
-        MagicPixel = new ImageIcon("src/main/resources/MagicPixel.png").getImage();
-    }
-
     private void initGame() {
-        GameWindow = new Window();
-        add(GameWindow);
+        Main = new Main();
+        add(Main);
 
         setLocation(0, 0);
         setSize(1980, 1080);
@@ -40,7 +32,7 @@ public class Cunovania extends JFrame {
     public static void main(String[] args) {
         System.out.println("sus");
         EventQueue.invokeLater(() -> {
-            Instance = new Cunovania();
+            Instance = new Program();
             Instance.setVisible(true);
         });
     }

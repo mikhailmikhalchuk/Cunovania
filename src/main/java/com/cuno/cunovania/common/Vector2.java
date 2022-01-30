@@ -51,6 +51,10 @@ public class Vector2 {
         Y += vector.Y;
     }
 
+    public Vector2 inverse() {
+        return new Vector2(-X, -Y);
+    }
+
     @Override
     public String toString() {
         return "Vector2{" +
